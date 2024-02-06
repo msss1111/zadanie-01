@@ -1,0 +1,129 @@
+Установка
+
+1)Заходимнасайт Oracle (Downloads – Oracle VM VirtualBox) и скачиваем последнюю версию VirtualBox 
+
+2)После скачивания программы, запускаем .exe-файл и следуем инструкциям установщика.
+
+3)Устанавливаю VM VirtualBox Extension Pack
+
+4. Скачал desktop-версии Ubuntu 22.04
+
+5. Открываем VirtualBox — new
+
+1)имя виртуальной машины Ubuntu 22.04
+
+В следующем окне указываем
+
+1)количество оперативной памяти 8192MB 
+
+Next.
+
+1)Createavirtualharddisknow Этого пункта нету поставил 100 гигов в настройках отобразился Dynamicallyallocated
+Доп настройки 
+
+1)System — Processor2 =4.
+2)System — Processor — Extended Features — Enable Nested VT-x/AMD-V
+
+Проверил в биосе настройку (виртуализация)
+Cmd от Админа
+cd C:\Program Files\Oracle\VirtualBox
+
+VBoxManage.exe list vms
+
+VBoxManage.exe modifyvm “ubuntu 22.04” –nested-hw-virt on
+
+Запускаем install ubuntu
+
+Язык английский 
+
+Далее откроется мастер установки ОС:
+
+1)Выбираем язык – английский
+2)Выбираем раскладку английский
+3)ВыбираемNormal Installation, 
+4)поставитьгалочкуDownload updates while installing Ubuntu 
+
+Вследующемокне
+1)выбираем параметр ErasediskandinstallUbuntu - 
+
+•	Указываем город Москва
+•	имя пользователяmsss111
+•	имя хоста msss111
+
+Настройка рабочего места в Debian/Ubuntu 
+sudo apt update
+sudo apt install -y vim
+sudo apt install -y traceroute net-tools tcpdump 
+sudo apt install -y curl wget
+sudo apt install -y git
+sudo dpkg -icode_1.86.0-1706698139_amd64.deb
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
+
+sudo apt update 
+sudo apt install -y virtualbox-7.0 
+sudo apt install -y virtualbox-ext-pack 
+
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt update
+sudo apt install -y vagrant
+vagrantversion\  был установлен 2.2.4 снес его
+
+https://releases.hashicorp.com/vagrant/2.4.0/Скачал deb пакет отсюда и поставил его версия 2.4
+
+sudo apt install -y ansible
+ansible –version
+
+Установил Tor и пропустил трафик через него 
+apt-get install tor privoxy Установка tor и privoxy
+nano /etc/privoxy/config 
+вписываю в файл
+forward-socks5 / localhost:9050 .
+forward-socks4 / localhost:9050 .
+forward-socks4a / localhost:9050 .
+sudo service tor start && service privoxy start Запуск сервисов
+
+Параметры сетевого подключения через прокси: 
+HTTP proxy: localhost:8118 
+SSL proxy: localhost:8118 
+SOCKS host: localhost:9050
+
+           После переброса трафика через tor смог установить протон ВПН из-за нестабильной работы tor
+
+Vagrant
+
+Зарегистрировался в vagrant и зашел в систему 
+
+mkdir test_vm && cd test_vm  
+vagrant init ubuntu/focal64 
+vagrant up--debug ставим
+
+vagrant ssh подключаемся
+
+vagrant destroy удалим ее
+
+Меняю настройки файла agrant в соответствии с заданием
+
+vagrant up
+
+http://127.0.0.1:8080 проверяю работу Apache.
+
+ 
+
+Загрузка в GitHub
+
+1)зарегистироваться:GitHub
+
+1) Заходим в Ваш аккаунт GitHub > Create repository
+2) указываю имя репозитория тип репозитория Public 
+3) Далее нажимаем Create repository
+
+4) В каталоге с  Vagrantfile создал файл README.md вписал в него echo «Create Ubuntu 20.04 VM» >> README.md
+5) git init
+6) git add README.md   git add .
+7) Ввел в систему прямое указание на пользователя и почту
+8) Зафиксируемизменения: git commit -m «test commit»
+9) Добавим информацию о созданном репозитории в GitHub: git remote add origin https://github.com/msss1111/zadanie-01.git
+10) Отправляем файлы в удаленный репозиторий GitHub: gitpush -u origin main 
